@@ -3,28 +3,30 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 
-console.log(process.env.API_KEY, process.env.API_SECRET, process.env.API_ID);
+const PORT = 3001;
 
-const getToken = async () => {
-  const client = await stream.connect(
+const getToken = () => {
+  const client = stream.connect(
     process.env.API_KEY,
     process.env.API_SECRET,
     process.env.API_ID
   );
 
-  const userToken = client.createUserToken("user-one");
+  const userToken = client.createUserToken("user1");
 
   return userToken;
 };
-
-console.log("this isi the user token", getToken());
 
 const app = express();
 
 app.use(cors());
 
-app.listen(3000, () => console.log("Example app listening on port 3000!"));
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get("/token", (req, res) => {
+  const token = getToken();
+  user1 = client.feed("user", "1");
+  activity = { actor: 1, verb: "tweet", object: 1, foreign_id: "tweet:1" };
+  user1.addActivity(activity);
+  res.json({ token });
 });
+
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
